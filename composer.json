@@ -1,0 +1,21 @@
+{
+    "name": "suilven/silverstripe-notifier",
+    "description": "Notify to logs and optionally to other sources via configuration",
+    "type": "silverstripe-vendormodule",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gordon Anderson",
+            "email": "gordon.b.anderson@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Suilven\\Notifier\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "alek13/slack": "^2.0@dev"
+    }
+}

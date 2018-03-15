@@ -1,0 +1,9 @@
+---
+name: suilven-notifier
+---
+Suilven\Notifier\Notify:
+  slack_webhooks:
+    #Channels are already preconfigured by webhook setup
+    #A default channel must exist for Slack to work
+    - name: default
+      url: https://hooks.slack.com/services/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
