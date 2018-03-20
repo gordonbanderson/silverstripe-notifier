@@ -30,22 +30,10 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
     {
         error_log('Initalising in job code, slack job');
 
-        // this needs to be in standard object format for it to be serialized.  Hence no local property definitions above
-        /*
-        $this->webhookURL = $webhookURL;
-        $this->message = $message;
-        $this->channel = $channel;
-        */
         $this->type = QueuedJob::IMMEDIATE;
         $this->times = array();
     }
 
-    public function setWibble($wibble)
-    {
-        $this->wibble = $wibble;
-    }
-
-    /**
      * @return string
      */
     public function getJobType()
@@ -91,6 +79,10 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
             error_log('T2');
             $client->to($this->channel)->send($this->message);
         }
+
+        // required to terminate the job
+        $this->isComplete = true;
+        $this->currentStep = 1;
 
     }
 }
