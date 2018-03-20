@@ -18,10 +18,8 @@ use Symbiote\QueuedJobs\Services\QueuedJobService;
 class Notify
 {
 
-    public function wibble()
-    {
+    private $wibble;
 
-    }
 
     public static function debug($message, $channel = 'development')
     {
@@ -59,13 +57,20 @@ class Notify
 
         // create job and place on the queue
         error_log("NotifyViaSlackJob({$url}, {$message}, {$channel})");
-        $job = new NotifyViaSlackJob($url, $message, $channel);
+        $job = new NotifyViaSlackJob();
+        $job->webhookURL = $url;
+        $job->message = $message;
+        $job->channel = $channel;
+
+        $job->setWibble('This is wibble!!!!');
+
         Injector::inst()->get(LoggerInterface::class)->debug('Created slack job');
 
-        $job->setup();
-        $job->process();
+        // this works but not queued
+        // $job->setup();
+        // $job->process();
 
-        //singleton(QueuedJobService::class)->queueJob($job);
+        singleton(QueuedJobService::class)->queueJob($job);
 
     }
 }

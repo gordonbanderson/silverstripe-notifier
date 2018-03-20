@@ -20,36 +20,29 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
     private $type = QueuedJob::QUEUED;
 
     /**
-     * @var null|string webhook URL for slack
-     */
-    private $webhookURL = null;
-
-    /**
-     * @var null|string the channel to send to, null for default in webhook
-     */
-    private $channel = null;
-
-    /**
-     * @var null|string the message to send
-     */
-    private $message = null;
-
-    /**
      * Initialise job as immediate with no timing restrictions
      * @param string $webhookURL the URL to use to ping slack
      * @param string $message the message payload
      * @param null|string the channel to send to, blank for the webhook default
      * @param null $type the job type
      */
-    public function __construct($webhookURL, $message, $channel, $type = null)
+    public function __construct()
     {
         error_log('Initalising in job code, slack job');
 
+        // this needs to be in standard object format for it to be serialized.  Hence no local property definitions above
+        /*
         $this->webhookURL = $webhookURL;
         $this->message = $message;
         $this->channel = $channel;
+        */
         $this->type = QueuedJob::IMMEDIATE;
         $this->times = array();
+    }
+
+    public function setWibble($wibble)
+    {
+        $this->wibble = $wibble;
     }
 
     /**
