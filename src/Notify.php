@@ -12,6 +12,8 @@ use Maknz\Slack\Client;
 use Psr\Log\LoggerInterface;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
+use Suilven\Notifier\Jobs\NotifyViaSlackJob;
+use Symbiote\QueuedJobs\Services\QueuedJobService;
 
 class Notify
 {
@@ -37,11 +39,8 @@ class Notify
      */
     private static function sendSlackMessage($message, $channel)
     {
-        user_error('test');
-
         $hooksFromConfig = Config::inst()->get('Suilven\Notifier\Notify', 'slack_webhooks');
         $url = null;
-        Injector::inst()->get(LoggerInterface::class)->debug('HOOKS ' . print_r($hooksFromConfig, 1));
 
         foreach($hooksFromConfig as $hook)
         {
@@ -58,8 +57,15 @@ class Notify
             return;
         }
 
-        $client = new Client($url);
-        $client->to($channel)->send($message);
+        // create job and place on the queue
+        error_log("NotifyViaSlackJob({$url}, {$message}, {$channel})");
+        $job = new NotifyViaSlackJob($url, $message, $channel);
+        Injector::inst()->get(LoggerInterface::class)->debug('Created slack job');
+
+        $job->setup();
+        $job->process();
+
+        //singleton(QueuedJobService::class)->queueJob($job);
 
     }
 }
