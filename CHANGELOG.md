@@ -1,5 +1,16 @@
 # Change Log
 
+## [Unreleased](https://github.com/gordonbanderson/silverstripe-notifier/tree/HEAD)
+
+[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.2...HEAD)
+
+**Implemented enhancements:**
+
+- Queue Slack Calls [\#1](https://github.com/gordonbanderson/silverstripe-notifier/issues/1)
+
+## [1.0.2](https://github.com/gordonbanderson/silverstripe-notifier/tree/1.0.2) (2018-03-20)
+[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.1...1.0.2)
+
 ## [1.0.1](https://github.com/gordonbanderson/silverstripe-notifier/tree/1.0.1) (2018-03-20)
 [Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.0...1.0.1)
 
