@@ -17,7 +17,7 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
     /**
      * @var string job type is queued
      */
-    private $type = QueuedJob::QUEUED;
+    private $type = QueuedJob::IMMEDIATE;
 
     /**
      * Initialise job as immediate with no timing restrictions
@@ -28,8 +28,6 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
      */
     public function __construct()
     {
-        error_log('Initalising in job code, slack job');
-
         $this->type = QueuedJob::IMMEDIATE;
         $this->times = array();
     }
@@ -47,7 +45,7 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
      */
     public function getTitle()
     {
-        return "Job to send message to Slack";
+        return "Slack Sender";
     }
 
     /**
@@ -60,30 +58,24 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
 
 
     /**
-     * Send the webhook
+     * Send the webhook to slack
      */
     public function process()
     {
-        error_log('**** Processing slack job');
+        error_log('Processing webhook');
+        // $this->channel evaluates to blank in the following if, so store it as a variable
+        $channel = $this->channel;
 
         $client = new Client($this->webhookURL);
-        if (empty($this->channel)) {
-            #Send to default channel
-            error_log('T1');
-            error_log('HOOK: ' . $this->webhookURL);
-            error_log('CHANNEL: ' . $this->channel);
-            error_log('MSG: ' . $this->message);
-
+        if (empty($channel)) {
             $client->send($this->message);
         } else {
             #Send to designated channel
-            error_log('T2');
             $client->to($this->channel)->send($this->message);
         }
 
         // required to terminate the job
         $this->isComplete = true;
         $this->currentStep = 1;
-
     }
 }

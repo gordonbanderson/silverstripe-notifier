@@ -10,6 +10,7 @@ namespace Suilven\Notifier;
 
 use Maknz\Slack\Client;
 use Psr\Log\LoggerInterface;
+use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Injector\Injector;
 use Suilven\Notifier\Jobs\NotifyViaSlackJob;
@@ -17,8 +18,22 @@ use Symbiote\QueuedJobs\Services\QueuedJobService;
 
 class Notify
 {
+    const LEVELS = [
+      'DEBUG' => 1,
+      'INFO' => 2,
+      'NOTICE' => 3,
+      'WARNING' => 4,
+      'ERROR' => 5,
+      'CRITICAL' => 6,
+      'ALERT' => 7,
+      'EMERGENCY' => 8,
+    ];
 
-    private $wibble;
+    /**
+     * @var bool|string if this is set to a channel name, the channel will be set to this value.  This allows likes of
+     *      all dev Slack activity to go to one channel, but for them to be separated in production
+     */
+    private static $channel_override = false;
 
 
     public static function debug($message, $channel = 'development')
@@ -37,11 +52,27 @@ class Notify
      */
     private static function sendSlackMessage($message, $channel)
     {
-        $hooksFromConfig = Config::inst()->get('Suilven\Notifier\Notify', 'slack_webhooks');
-        $url = null;
+        // do not send Slack messages in test mode for now
+        // @todo Trap these for testing
+        if (Director::isTest()) {
+            return;
+        }
 
+        $hooksFromConfig = Config::inst()->get('Suilven\Notifier\Notify', 'slack_webhooks');
+        error_log('HOOKS: ' . print_r($hooksFromConfig, 1));
+
+        // optionally override the channel
+        $channelOverride = Config::inst()->get('Suilven\Notifier\Notify', 'channel_override');
+        if (!empty($channelOverride)) {
+            $channel = $channelOverride;
+            error_log('>>>>>>>> Overriden channel ' . $channelOverride);
+        }
+
+        // get the appropriate webhook
+        $url = null;
         foreach($hooksFromConfig as $hook)
         {
+            // stick with the default webhook but allow overriding on a per channel basis
             if ($hook['name'] == $channel)
             {
                 $url = $hook['url'];
@@ -50,27 +81,22 @@ class Notify
             }
         }
 
+        // Log an error if Slack config misconfigured
         if (empty($url)) {
-            Injector::inst()->get(LoggerInterface::class)->debug('The slack channel ' . $channel . ' has no webhook');
+            Injector::inst()->get(LoggerInterface::class)->error('The slack channel ' . $channel . ' has no webhook');
             return;
         }
 
-        // create job and place on the queue
+        // create job
         error_log("NotifyViaSlackJob({$url}, {$message}, {$channel})");
         $job = new NotifyViaSlackJob();
         $job->webhookURL = $url;
         $job->message = $message;
         $job->channel = $channel;
 
-        $job->setWibble('This is wibble!!!!');
+        error_log('Placing job on queue');
 
-        Injector::inst()->get(LoggerInterface::class)->debug('Created slack job');
-
-        // this works but not queued
-        // $job->setup();
-        // $job->process();
-
+        // place on queue
         singleton(QueuedJobService::class)->queueJob($job);
-
     }
 }
