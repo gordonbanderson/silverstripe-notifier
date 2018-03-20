@@ -34,6 +34,7 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
         $this->times = array();
     }
 
+    /**
      * @return string
      */
     public function getJobType()
