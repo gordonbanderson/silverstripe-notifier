@@ -2,7 +2,14 @@
 
 ## [Unreleased](https://github.com/gordonbanderson/silverstripe-notifier/tree/HEAD)
 
-[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.2...HEAD)
+[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.3...HEAD)
+
+**Closed issues:**
+
+- Provide a notify\(\) Method Using Traits [\#3](https://github.com/gordonbanderson/silverstripe-notifier/issues/3)
+
+## [1.0.3](https://github.com/gordonbanderson/silverstripe-notifier/tree/1.0.3) (2018-03-20)
+[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.2...1.0.3)
 
 **Implemented enhancements:**
 
