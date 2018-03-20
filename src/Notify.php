@@ -36,7 +36,90 @@ class Notify
     private static $channel_override = false;
 
 
+    /**
+     * Send a debug message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
     public static function debug($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send an info message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function info($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send a notice message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function notice($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send a warning message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function warning($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send an error message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function error($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send a critical message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function critical($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send an alert message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function alert($message, $channel = 'development')
+    {
+        self::sendSlackMessage($message, $channel);
+    }
+
+    /**
+     * Send an emergency message to slack
+     *
+     * @param $message message to send
+     * @param string $channel channel to ping
+     */
+    public static function emergency($message, $channel = 'development')
     {
         self::sendSlackMessage($message, $channel);
     }
