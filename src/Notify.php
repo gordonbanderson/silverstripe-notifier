@@ -59,13 +59,11 @@ class Notify
         }
 
         $hooksFromConfig = Config::inst()->get('Suilven\Notifier\Notify', 'slack_webhooks');
-        error_log('HOOKS: ' . print_r($hooksFromConfig, 1));
 
         // optionally override the channel
         $channelOverride = Config::inst()->get('Suilven\Notifier\Notify', 'channel_override');
         if (!empty($channelOverride)) {
             $channel = $channelOverride;
-            error_log('>>>>>>>> Overriden channel ' . $channelOverride);
         }
 
         // get the appropriate webhook
@@ -88,13 +86,10 @@ class Notify
         }
 
         // create job
-        error_log("NotifyViaSlackJob({$url}, {$message}, {$channel})");
         $job = new NotifyViaSlackJob();
         $job->webhookURL = $url;
         $job->message = $message;
         $job->channel = $channel;
-
-        error_log('Placing job on queue');
 
         // place on queue
         singleton(QueuedJobService::class)->queueJob($job);

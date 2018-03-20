@@ -62,7 +62,6 @@ class NotifyViaSlackJob extends AbstractQueuedJob implements QueuedJob
      */
     public function process()
     {
-        error_log('Processing webhook');
         // $this->channel evaluates to blank in the following if, so store it as a variable
         $channel = $this->channel;
 
