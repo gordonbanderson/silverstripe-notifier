@@ -12,7 +12,7 @@
     "autoload": {
         "psr-4": {
             "Suilven\\Notifier\\": "src/",
-            "Suilven\\Notifier\\Tests": "src/Tests"
+            "Suilven\\Notifier\\Tests\\": "src/Tests"
         }
     },
     "minimum-stability": "dev",
