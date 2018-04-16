@@ -25,7 +25,7 @@ class NotifyTest extends SapphireTest
         $cfg = [
             [
                     'name' => 'default',
-                    'url' => 'https://hooks.slack.com/services/BIT1/BIT2'
+                    'url' => 'https://hooks.slack.com/services/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'
                 ]
         ];
 
