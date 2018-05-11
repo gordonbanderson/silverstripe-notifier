@@ -26,6 +26,7 @@ jobs:
     branches:
       only:
         - master
+        - fixtests
 
     steps:
       - checkout
