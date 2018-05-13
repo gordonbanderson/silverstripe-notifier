@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/gordonbanderson/silverstripe-notifier/tree/HEAD)
-
-[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.3...HEAD)
+## [1.0.4](https://github.com/gordonbanderson/silverstripe-notifier/tree/1.0.4) (2018-05-13)
+[Full Changelog](https://github.com/gordonbanderson/silverstripe-notifier/compare/1.0.3...1.0.4)
 
 **Closed issues:**
 
