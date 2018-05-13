@@ -17,7 +17,7 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "alek13/slack": "^2.0@dev",
+        "alek13/slack": "^1",
         "symbiote/silverstripe-queuedjobs": "^4.1"
     },
     "require-dev": {
