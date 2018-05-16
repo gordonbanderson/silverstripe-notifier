@@ -17,6 +17,7 @@
     },
     "minimum-stability": "dev",
     "require": {
+        "silverstripe/framework": "^4",
         "alek13/slack": "^2.0@dev",
         "symbiote/silverstripe-queuedjobs": "^4"
     },
