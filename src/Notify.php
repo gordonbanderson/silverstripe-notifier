@@ -151,16 +151,20 @@ class Notify
 
         // get the appropriate webhook
         $url = null;
-        foreach($hooksFromConfig as $hook)
-        {
-            // stick with the default webhook but allow overriding on a per channel basis
-            if ($hook['name'] == $channel)
+
+        if (!empty($hooksFromConfig)) {
+            foreach($hooksFromConfig as $hook)
             {
-                $url = $hook['url'];
-            } elseif (empty($url) && $hook['name'] == 'default') {
-                $url = $hook['url'];
+                // stick with the default webhook but allow overriding on a per channel basis
+                if ($hook['name'] == $channel)
+                {
+                    $url = $hook['url'];
+                } elseif (empty($url) && $hook['name'] == 'default') {
+                    $url = $hook['url'];
+                }
             }
         }
+
 
         // Log an error if Slack config misconfigured
         if (empty($url)) {
